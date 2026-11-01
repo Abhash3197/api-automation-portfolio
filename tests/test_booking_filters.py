@@ -65,5 +65,6 @@ def test_list_bookings_with_invalid_filter(api_client):
         params={"invalid_param": "value"}
     )
 
-    # API should either ignore or handle gracefully
-    assert response.status_code in [200, 400], "Should handle invalid filters gracefully"
+    # Unknown filters are ignored and the full list is returned
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
